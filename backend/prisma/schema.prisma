@@ -1,0 +1,25 @@
+// Esquema de Prisma - Compatible con MySQL y PostgreSQL
+// Para cambiar de base de datos, solo modifica el provider y DATABASE_URL en .env
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // Cambia "mysql" por "postgresql" según tu entorno
+  // En desarrollo: mysql
+  // En producción: postgresql
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(255)
+  description String?  @db.Text
+  price       Decimal  @db.Decimal(10, 2)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("products")
+}
